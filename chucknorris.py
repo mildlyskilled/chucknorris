@@ -1,6 +1,3 @@
-# to run save this file as chucknorris.py and then run
-# python chucknorris.py
-
 import urllib2
 import json
 import sys
@@ -14,8 +11,8 @@ class ChuckNorris():
     base_url = "http://api.icndb.com/jokes/{0}"
 
     def __init__(self, opts=None, args=None):
-    	if not opts or not args:
-    		return None
+    	if not opts:
+    		return self.get_random_jokes()
 
         for opt, arg in opts:
             if opt in ("-r", "--random"):
@@ -77,11 +74,11 @@ class ChuckNorris():
 
 
 if __name__ == '__main__':
-
     try:
         opts, args = getopt(sys.argv[1:], "hr", ["id=", "random="])
         cn = ChuckNorris(opts, args)
-    except GetoptError:
+    except GetoptError as e:
+        print e.read()
     	print "Invalid option"
         ChuckNorris.usage(ChuckNorris())
         sys.exit(2)
